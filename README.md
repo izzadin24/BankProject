@@ -1,0 +1,1 @@
+The project is focused on building app that is oriented to online banking. It has several features such as setor and tarik
