@@ -25,7 +25,9 @@ How to Run the Project
 To run this project on your computer, follow these steps:
 
 Clone this repository:
+```
 git clone https://github.com/izzadin24/BankProject.git
+```
 
 Open the project in IntelliJ IDEA:
 Select File > Open...
