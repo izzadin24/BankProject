@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class BankAccount {
+
     String accountNumber;
     String ownerName;
     double balance;
