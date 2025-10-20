@@ -1,4 +1,4 @@
-package main.java.com.yourname.bankapp;
+package main.java.com.izzadin.bankapp;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
