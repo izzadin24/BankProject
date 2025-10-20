@@ -1,9 +1,9 @@
-Simple Bank Application Project
+# Simple Bank Application Project
 
 
 This application is a simple console program created as an assignment. This program still only simulates several basic functions of a bank account, such as creating an account, making deposits, and withdrawing money. This project also demonstrates the application of good coding principles like refactoring, encapsulation, and documentation.
 
-Main Features
+## Main Features
 
 The following are the main functionalities available in this program:
 Login System: The program has a simple password-based login system with a limited number of attempts.
