@@ -1,126 +1,137 @@
 package main.java.com.izzadin.bankapp;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class BankAccount {
 
-    String accountNumber;
-    String ownerName;
-    double balance;
-    Scanner scanner;
+    private String accountNumber;
+    private String ownerName;
+    private double balance;
 
-    // Konstruktor dengan parameter Scanner biar pakai 1 scanner dari main
-    public BankAccount(Scanner scanner) {
-        this.scanner = scanner;
+    public BankAccount(String accountNumber, String ownerName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.ownerName = ownerName;
+        this.balance = initialBalance;
     }
 
     public void displayInfo() {
-        System.out.println();
+        System.out.println("\n--- Info Akun ---");
         System.out.println("Nomor Rekening: " + this.accountNumber);
         System.out.println("Nama Pemilik: " + this.ownerName);
         System.out.println("Saldo: Rp" + this.balance);
-        System.out.println();
+        System.out.println("-----------------");
     }
 
-    public void depositMoney() {
-        while (true) {
-            try {
-                System.out.print("Jumlah yang ingin disetor untuk " + ownerName + ": Rp");
-                double amount = scanner.nextDouble();
-                scanner.nextLine(); // bersihkan newline
-                if (amount <= 0) {
-                    System.out.println("Tidak boleh negatif atau nol!");
-                    continue;
-                }
-                balance += amount;
-                System.out.println(ownerName + " menyetor Rp" + amount + ". Saldo sekarang: Rp" + balance);
-                System.out.println();
-                break;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Harus berupa angka!");
-                scanner.nextLine(); // reset input error
-            }
+    public void deposit(double amount) {
+        if (amount > 0) {
+            // Perbaikan #3: Akses langsung lebih ringkas di dalam kelas sendiri
+            this.balance += amount;
+            System.out.println("Setoran Rp" + amount + " berhasil. Saldo baru: Rp" + this.balance);
+        } else {
+            System.out.println("Jumlah setoran harus lebih dari nol.");
         }
     }
 
-    public void withdrawMoney() {
-        System.out.print("Masukkan jumlah yang ingin ditarik untuk " + ownerName + ": Rp");
-        try {
-            double amount = scanner.nextDouble();
-            scanner.nextLine(); // bersihkan newline
-            if (amount <= 0) {
-                System.out.println("Jumlah tidak boleh nol atau negatif!");
-                return;
-            }
-            if (balance >= amount) {
-                balance -= amount;
-                System.out.println(ownerName + " menarik Rp" + amount + ". (Berhasil) Saldo sekarang: Rp" + balance);
-            } else {
-                System.out.println(ownerName + " menarik Rp" + amount + ". (Gagal, Saldo tidak mencukupi) Saldo saat ini: Rp" + balance);
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Input salah! Harus angka.");
-            scanner.nextLine();
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Jumlah penarikan harus lebih dari nol.");
+            return;
         }
-        System.out.println();
+
+        if (isSufficientBalance(amount)) {
+            // Perbaikan #3: Akses langsung lebih ringkas
+            this.balance -= amount;
+            System.out.println("Penarikan Rp" + amount + " berhasil. Saldo baru: Rp" + this.balance);
+        } else {
+            System.out.println("Gagal! Saldo tidak mencukupi.");
+        }
     }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+
+    private boolean isSufficientBalance(double amount) {
+        return this.balance >= amount;
+    }
+
+
 }
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String sandi = "4567";
-        boolean login = false;
 
-        // LOGIN SEKALI AJA
-        for (int i = 0; i < 4; i++) {
+
+
+
+public class Main {
+    public static final String CORRECT_PASSWORD = "4567";
+    public static final int MAX_LOGIN_ATTEMPTS = 4;
+
+    // Perbaikan #1: Signature metode disederhanakan, tidak perlu parameter 'sandi' dan 'login'
+    private static boolean handleLogin(Scanner scanner) {
+        for (int i = 0; i < MAX_LOGIN_ATTEMPTS; i++) {
             System.out.print("Masukkan sandi: ");
             String input = scanner.nextLine().trim();
-
-            if (input.equals(sandi)) {
-                login = true;
-                break;
+            // Langsung akses konstanta
+            if (input.equals(CORRECT_PASSWORD)) {
+                System.out.println("Login berhasil!");
+                return true; // Langsung return, lebih jelas
             } else {
                 System.out.println("Sandi salah!");
             }
         }
+        return false; // Return false jika loop selesai (gagal)
+    }
 
-        if (!login) {
-            System.out.println("Terlalu banyak kegagalan. coba lagi nanti");
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Perbaikan 2: Panggilan ke handleLogin lebihj simpel
+        boolean isLoggedIn = handleLogin(scanner);
+
+        if (!isLoggedIn) {
+            System.out.println("Terlalu banyak kegagalan. Coba lagi nanti.");
+            scanner.close();
             System.exit(0);
         }
 
-        // Buat akun setelah berhasil login
-        BankAccount account1 = new BankAccount(scanner);
-        BankAccount account2 = new BankAccount(scanner);
+        BankAccount account1 = new BankAccount("202410370110325", "Nabiila Izzati", 500000.0);
+        BankAccount account2 = new BankAccount("202410370110038", "Amalia", 1000000.0);
 
-        // Set data akun
-        account1.accountNumber = "202410370110325";
-        account1.ownerName = "Nabiila Izzati";
-        account1.balance = 500000.0;
-
-        account2.accountNumber = "202410370110038";
-        account2.ownerName = "Amalia";
-        account2.balance = 1000000.0;
-
-        // Tampilkan info awal
         account1.displayInfo();
         account2.displayInfo();
 
-        // Setor
-        account1.depositMoney();
-        account2.depositMoney();
+        System.out.print("\nMasukkan jumlah setoran untuk " + account1.getOwnerName() + ": Rp");
+        double depositAmount1 = scanner.nextDouble();
+        account1.deposit(depositAmount1);
 
-        // Tarik
-        account1.withdrawMoney();
-        account2.withdrawMoney();
+        System.out.print("Masukkan jumlah penarikan untuk " + account2.getOwnerName() + ": Rp");
+        double withdrawAmount2 = scanner.nextDouble();
+        account2.withdraw(withdrawAmount2);
 
-        // Tampilkan info akhir
         account1.displayInfo();
         account2.displayInfo();
 
-        scanner.close(); // jangan lupa tutup scanner
+        scanner.close();
     }
 }
