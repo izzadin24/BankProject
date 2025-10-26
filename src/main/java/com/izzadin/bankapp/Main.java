@@ -2,7 +2,7 @@ package main.java.com.izzadin.bankapp;
 
 import java.util.Scanner;
 
-class BankAccount {
+class BankAccount implements AccountOperations {
 
     private String accountNumber;
     private String ownerName;
