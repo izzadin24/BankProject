@@ -10,3 +10,12 @@ public interface AccountOperations {
     void displayInfo();
 
 }
+
+/**
+ * git init
+ * git add .
+ * git commit -m "initial commit"
+ * git remote add origin <url></url>
+ * git branch -M master
+ * git push -u origin master
+ */
