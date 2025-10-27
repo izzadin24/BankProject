@@ -1,7 +1,7 @@
 # Simple Bank Application Project
 
 
-This application is a simple console program created as an assignment. This program still only simulates several basic functions of a bank account, such as creating an account, making deposits, and withdrawing money. This project also demonstrates the application of good coding principles like refactoring, encapsulation, and documentation.
+This application is a simple console program created as an assignment. This program still only simulates several basic functions of a bank account, such as creating an account, making deposits, and withdrawing money. This project also demonstrates the application of good coding principles like refactoring, encapsulation, and documentation. We will try to inform the minor updates
 
 ## Main Features
 
